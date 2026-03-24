@@ -40,7 +40,7 @@ ensure_line() {
   fi
 }
 
-link_file "$repo_dir/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+link_file "$repo_dir/ghostty/config" "$HOME/.config/ghostty/config"
 
 ensure_line 'eval "$(zoxide init zsh)"' "$HOME/.zshrc"
 
