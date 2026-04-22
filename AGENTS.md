@@ -113,6 +113,66 @@ Git commits are signed via the 1Password SSH agent (`gpg.format = ssh`, `gpg.ssh
 
 Pre-commit hook runs `gitleaks protect --staged --config .gitleaks.toml`. If it fails, investigate — don't `--no-verify`.
 
+## Architecture Decision Records (ADRs)
+
+Significant decisions about how this repo is structured MUST be documented as ADRs in `docs/decisions/`.
+
+### When to write one
+
+An ADR is required for **any significant decision** — not just code. If unsure, write one. Cost of an unnecessary ADR is low; cost of an undocumented decision is high.
+
+**Always write an ADR when you:**
+
+- Choose a new tool or external service (e.g. switch from chezmoi to yadm, swap 1Password for a different password manager)
+- Change the sync / bootstrap model (auto-sync interval, manual-only, different trigger)
+- Change the secret-handling strategy (where keys live, how they're retrieved)
+- Restructure the repo layout (e.g. merge `Brewfile.*` back into one, add new top-level dirs)
+- Establish a cross-cutting convention (naming rules, prefix usage, what gets role-gated)
+- Pick or drop a machine identity (`role`, templated git identity, etc.)
+
+**You do not need an ADR for:**
+
+- Adding a file to the managed set (`chezmoi add ~/.new-thing`)
+- Updating a Brewfile with a new package in its existing role bucket
+- Typo fixes, comment improvements, non-structural README edits
+- Routine package-version tracking
+
+### Naming
+
+```
+NNN-short-descriptive-title.md
+```
+
+The filename must convey the subject — "switch-to-ssh-signed-commits" not "git-config-update". A reader unfamiliar with the repo must understand the decision from the title alone.
+
+### Template
+
+Copy [`docs/decisions/000-template.md`](docs/decisions/000-template.md).
+
+```markdown
+# ADR NNN: Title
+
+**Date:** YYYY-MM-DD
+**Status:** Proposed | Accepted | Superseded by ADR NNN
+
+## Context
+Why does this decision need to be made?
+
+## Decision
+What was decided?
+
+## Consequences
+What are the trade-offs? What becomes easier or harder?
+```
+
+### Index upkeep
+
+**Whenever an ADR is added, renamed, or changes status, update `docs/decisions/README.md` in the same commit.** The index table is the navigation surface; drift makes it useless.
+
+### Superseding
+
+Don't delete superseded ADRs. Mark the old one `Superseded by ADR NNN` and write the new one — the history of a decision is often as valuable as the current state.
+
 ## If auto-sync seems stuck
 
 ```

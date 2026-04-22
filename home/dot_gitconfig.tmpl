@@ -21,6 +21,7 @@
 	format = ssh
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [pull]
