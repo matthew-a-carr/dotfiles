@@ -1,0 +1,117 @@
+# Benefex-specific. Not installed on personal machine.
+
+tap "buildpacks/tap"
+
+# --- .NET ---
+brew "dotnet@8"
+cask "dotnet-sdk@8"
+
+# --- Docker / container runtime ---
+brew "colima"
+brew "docker"
+brew "docker-buildx"
+brew "docker-compose"
+brew "docker-completion"
+brew "podman"
+
+# --- Kubernetes / infra ---
+brew "helm"
+brew "k9s"
+brew "kubernetes-cli"
+brew "sops"
+brew "tfenv"
+brew "buildpacks/tap/pack"
+
+# --- Go toolchain (used by infra scripts) ---
+brew "go"
+brew "golangci-lint"
+brew "mage"
+go "github.com/go-delve/delve/cmd/dlv"
+go "golang.org/x/tools/gopls"
+go "honnef.co/go/tools/cmd/staticcheck"
+
+# --- Databases / perf ---
+brew "influxdb@1", restart_service: :changed
+brew "jmeter"
+
+# --- CI ---
+brew "circleci"
+
+# --- Corporate apps ---
+cask "cloudflare-warp"
+cask "cursor-cli"
+cask "gcloud-cli"
+cask "memoryanalyzer"
+cask "microsoft-auto-update"
+cask "microsoft-edge"
+cask "microsoft-teams"
+cask "mongodb-compass"
+
+# --- VSCode: work-specific languages + tooling ---
+vscode "circleci.circleci"
+vscode "datadog.datadog-vscode"
+vscode "docker.docker"
+vscode "wizcloud.wiz-vscode"
+
+# .NET stack
+vscode "ms-dotnettools.csdevkit"
+vscode "ms-dotnettools.csharp"
+vscode "ms-dotnettools.vscode-dotnet-modernize"
+vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "vscjava.migrate-java-to-azure"
+
+# Java / Spring stack
+vscode "redhat.java"
+vscode "redhat.fabric8-analytics"
+vscode "redhat.vscode-yaml"
+vscode "vmware.vscode-boot-dev-pack"
+vscode "vmware.vscode-spring-boot"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-java-upgrade"
+vscode "vscjava.vscode-maven"
+vscode "vscjava.vscode-spring-boot-dashboard"
+vscode "vscjava.vscode-spring-initializr"
+vscode "orta.vscode-jest"
+vscode "vitest.explorer"
+
+# Scala / Haskell
+vscode "scala-lang.scala"
+vscode "scalameta.metals"
+vscode "justusadam.language-haskell"
+vscode "jcanero.hoogle-vscode"
+vscode "lunaryorn.hlint"
+vscode "maxgabriel.brittany"
+vscode "vans.haskero"
+
+# Infra-as-code / cloud
+vscode "4ops.terraform"
+vscode "hashicorp.terraform"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+
+# MS SQL (Benefex uses SQL Server)
+vscode "ms-mssql.data-workspace-vscode"
+vscode "ms-mssql.mssql"
+vscode "ms-mssql.sql-bindings-vscode"
+vscode "ms-mssql.sql-database-projects-vscode"
+
+# Angular (frontend admin)
+vscode "angular.ng-template"
+vscode "dcortes92.freemarker"
+vscode "dsznajder.es7-react-js-snippets"
+vscode "bradlc.vscode-tailwindcss"
+vscode "johnpapa.angular-essentials"
+vscode "johnpapa.angular2"
+vscode "nrwl.angular-console"
+vscode "leizongmin.node-module-intellisense"
+vscode "steoates.autoimport"
+
+# Go
+vscode "golang.go"
+
+# Misc work
+vscode "ms-vsliveshare.vsliveshare"

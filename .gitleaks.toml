@@ -1,0 +1,42 @@
+# gitleaks config for dotfiles repo.
+# Extend the default ruleset with a few dotfiles-specific patterns.
+# Run: gitleaks detect --source . --config .gitleaks.toml
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "npm-auth-token"
+description = "npmrc _authToken"
+regex = '''_authToken\s*=\s*[A-Za-z0-9_\-]{20,}'''
+tags = ["token", "npm"]
+
+[[rules]]
+id = "openssh-private-key"
+description = "OpenSSH private key header"
+regex = '''-----BEGIN (OPENSSH|RSA|DSA|EC|PGP) PRIVATE KEY-----'''
+tags = ["key", "private"]
+
+[[rules]]
+id = "gcp-service-account"
+description = "GCP service account key JSON"
+regex = '''"type":\s*"service_account"'''
+tags = ["gcp", "key"]
+
+[[rules]]
+id = "github-oauth-token"
+description = "GitHub OAuth/personal access token"
+regex = '''\b(gh[pousr]_[A-Za-z0-9]{36,})\b'''
+tags = ["github", "token"]
+
+[allowlist]
+# chezmoi template directives and 1Password references are not secrets
+regexes = [
+  '''\{\{\s*onepasswordRead''',
+  '''\{\{\s*op(Read|asswordRead)''',
+  '''op://[A-Za-z0-9 _/-]+''',
+]
+paths = [
+  '''\.gitleaks\.toml$''',
+  '''README\.md$''',
+]

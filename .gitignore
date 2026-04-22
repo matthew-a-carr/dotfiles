@@ -1,0 +1,86 @@
+# Backstop: these patterns must never enter the repo.
+# chezmoi and manual discipline are the primary guards; this is belt-and-braces.
+
+# Auth + session state
+**/auth.json
+**/oauth_creds.json
+**/google_accounts.json
+**/google_account_id
+**/installation_id
+**/.claude.json
+**/claude.json.backup
+
+# Private keys (keep .pub)
+**/id_rsa
+**/id_ed25519
+**/id_ecdsa
+**/id_dsa
+**/*.pem
+**/*.p12
+**/*.pfx
+**/*.key
+
+# GPG
+**/private-keys-v1.d/
+**/trustdb.gpg
+**/random_seed
+**/.gnupg/
+
+# Tokens + env files
+.env
+.env.*
+!.env.example
+**/.npmrc
+**/.pypirc
+**/credentials
+**/credentials.json
+
+# Runtime / ephemeral AI tool state
+**/history.jsonl
+**/sessions/
+**/archived_sessions/
+**/projects/
+**/todos/
+**/paste-cache/
+**/file-history/
+**/shell-snapshots/
+**/shell_snapshots/
+**/debug/
+**/telemetry/
+**/statsig/
+**/backups/
+**/cache/
+**/tmp/
+**/.tmp/
+**/log/
+**/logs/
+**/*.sqlite
+**/*.sqlite-shm
+**/*.sqlite-wal
+**/statsig-cache.json
+**/models_cache.json
+**/stats-cache.json
+**/mcp-needs-auth-cache.json
+**/.codex-global-state.json
+**/session-state/
+**/history-session-state/
+**/command-history-state.json
+**/prompt_history.json
+**/ide/
+**/worktrees/
+
+# Reinstallable via package manager — never commit
+node_modules/
+
+# macOS
+.DS_Store
+
+# Editor noise
+*.swp
+*.swo
+*~
+
+# IntelliJ licenses / account data
+idea.key
+plugin_*.license
+settingsSync/
