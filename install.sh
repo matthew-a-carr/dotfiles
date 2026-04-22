@@ -69,12 +69,10 @@ chezmoi init --apply --source "$repo_dir"
 say "Running post-install bootstrap"
 "$repo_dir/scripts/bootstrap.sh"
 
-# ---- 6. Keys from 1Password ----
-say "Restoring SSH private key"
-"$repo_dir/scripts/ssh-restore.sh"
-
-say "Importing GPG secret key"
-"$repo_dir/scripts/gpg-import.sh" || warn "GPG import skipped — rerun scripts/gpg-import.sh after creating the 1Password document"
+# ---- 6. SSH (optional — only needed if you don't use the 1Password SSH agent) ----
+# ssh-restore.sh has been deleted; 1Password handles SSH via its agent.
+# On a new machine, enable the 1Password SSH agent in the app's Developer settings
+# and SSH just works. Git commits are SSH-signed through the same agent (see ADR 009).
 
 # ---- 7. macOS defaults ----
 say "Applying macOS defaults"

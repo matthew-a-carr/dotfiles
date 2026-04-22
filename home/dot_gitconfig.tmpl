@@ -17,6 +17,10 @@
 {{- if .git.signingkey }}
 	gpgSign = true
 {{- end }}
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [pull]
@@ -32,5 +36,3 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-[gpg]
-	program = /opt/homebrew/bin/gpg

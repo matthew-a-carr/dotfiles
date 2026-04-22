@@ -105,8 +105,9 @@ Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward
 |---|---|
 | `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev`, `claude-mongo-dev` |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
-| `op://Employee/SSH id_ed25519/private key` | `scripts/ssh-restore.sh` |
-| `Employee` vault document `GPG Secret Key` | `scripts/gpg-import.sh` |
+| `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional fallback — 1Password SSH agent is the primary mechanism) |
+
+Git commits are signed via the 1Password SSH agent (`gpg.format = ssh`, `gpg.ssh.program = op-ssh-sign`). No GPG stack, no `~/.gnupg`. See ADR 009.
 
 ## Before committing manually
 

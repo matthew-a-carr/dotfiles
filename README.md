@@ -124,8 +124,9 @@ Nothing sensitive enters the repo. Defences:
 |---|---|
 | `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev` / `claude-mongo-dev` |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
-| `op://Employee/SSH id_ed25519/private key` | `scripts/ssh-restore.sh` |
-| Document `GPG Secret Key` | `scripts/gpg-import.sh` |
+| `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional) |
+
+SSH + git commit signing go through the 1Password SSH agent — no keys on disk, no GPG stack. See [ADR 009](docs/decisions/009-ssh-signed-commits-via-1password.md).
 
 ## What's managed here vs elsewhere
 

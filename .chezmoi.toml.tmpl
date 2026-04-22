@@ -1,21 +1,23 @@
 {{- /* Prompt once per machine at `chezmoi init`. Answers persist to
      ~/.config/chezmoi/chezmoi.toml and are available as {{ .role }},
      {{ .git.name }}, {{ .git.email }}, {{ .git.signingkey }} in every
-     template under home/. */ -}}
+     template under home/.
+
+     signingkey is an SSH public key (e.g. "ssh-ed25519 AAAA...") that
+     git uses via gpg.format=ssh + op-ssh-sign. See docs/decisions/009. */ -}}
 
 {{- $role := promptChoiceOnce . "role" "Machine role" (list "work" "personal") "work" -}}
 
-{{- $defaultName      := "Matthew Carr" -}}
-{{- $defaultEmail     := "76042279+matthew-a-carr@users.noreply.github.com" -}}
-{{- $defaultSigningkey := "BBD68EACBD96C903" -}}
-{{- if eq $role "personal" -}}
-  {{- $defaultEmail     = "" -}}
-  {{- $defaultSigningkey = "" -}}
+{{- $defaultName       := "Matthew Carr" -}}
+{{- $defaultEmail      := "76042279+matthew-a-carr@users.noreply.github.com" -}}
+{{- $defaultSigningkey := "" -}}
+{{- if eq $role "work" -}}
+  {{- $defaultSigningkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPu2k2mgljkS60Rhom/vQybDhctFxa/35gcT0tjYxHOB" -}}
 {{- end -}}
 
-{{- $name       := promptStringOnce . "git.name"       "Git commit author name"        $defaultName -}}
-{{- $email      := promptStringOnce . "git.email"      "Git commit author email"       $defaultEmail -}}
-{{- $signingkey := promptStringOnce . "git.signingkey" "GPG signing key ID (blank ok)" $defaultSigningkey -}}
+{{- $name       := promptStringOnce . "git.name"       "Git commit author name"                         $defaultName -}}
+{{- $email      := promptStringOnce . "git.email"      "Git commit author email"                        $defaultEmail -}}
+{{- $signingkey := promptStringOnce . "git.signingkey" "SSH public key for commit signing (blank = off)" $defaultSigningkey -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
@@ -30,3 +32,7 @@ signingkey = {{ $signingkey | quote }}
 [edit]
 command = "code"
 args = ["--wait"]
+
+[git]
+autoCommit = true
+autoPush = true
