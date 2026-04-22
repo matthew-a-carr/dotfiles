@@ -122,6 +122,39 @@ Git commits are signed via the 1Password SSH agent (`gpg.format = ssh`, `gpg.ssh
 
 Pre-commit hook runs `gitleaks protect --staged --config .gitleaks.toml`. If it fails, investigate — don't `--no-verify`.
 
+## Commit message format — Conventional Commits
+
+All commits in this repo follow [Conventional Commits](https://www.conventionalcommits.org/) (see ADR 010).
+
+```
+<type>(<optional scope>): <subject>
+
+<optional body>
+
+<optional footer>
+```
+
+Types used here:
+
+| Type | When |
+|---|---|
+| `feat` | New capability — new skill, new install step, new macOS default, new automation |
+| `fix` | Bug in config or script that was preventing something from working |
+| `chore` | Mechanical / non-behavioural — version bumps, syncs, dependency pins |
+| `docs` | Documentation only (README, AGENTS.md, ADRs, inline comments) |
+| `refactor` | Restructure without behavioural change (Brewfile split, rename, move) |
+| `revert` | Undo a prior commit |
+
+Scopes commonly used: `chezmoi`, `brewfile`, `install`, `zsh`, `claude`, `codex`, `ssh`, `adr`, `agent-guide`. Add new scopes as needed — no fixed list.
+
+### Auto-sync commits
+
+The launchd auto-sync agent uses chezmoi's `commitMessageTemplate` (in `~/.config/chezmoi/chezmoi.toml`) to produce conventional messages like `chore(chezmoi): update dot_zshrc.tmpl` automatically. You don't write these by hand.
+
+### Manual commits
+
+When you commit directly (scaffolding files outside `home/`, new ADRs, new Brewfile entries), write the message yourself following the format above. Use an imperative-mood subject line under ~70 chars. Body wraps at 72 chars if present.
+
 ## Architecture Decision Records (ADRs)
 
 Significant decisions about how this repo is structured MUST be documented as ADRs in `docs/decisions/`.
