@@ -23,7 +23,7 @@ Never commit secrets. Use 1Password references (`op://...`) or chezmoi `.tmpl` f
 │   ├── dot_claude/…         → ~/.claude/…
 │   ├── private_dot_ssh/…    → ~/.ssh/… (dir mode 700)
 │   └── …
-├── scripts/                 bootstrap.sh, ssh-restore.sh, gpg-import.sh
+├── scripts/                 bootstrap.sh, ssh-restore.sh
 └── macos/defaults.sh        system tweaks
 ```
 
@@ -71,7 +71,16 @@ git push
 
 ### When you add a brand-new tracked file
 
-`chezmoi re-add` only catches changes to files already in source. To start tracking a new file, run `chezmoi add ~/.new-thing` once — this copies it into the source tree with the right prefix. After that, auto-sync picks up future edits.
+`chezmoi re-add` only catches changes to files already in source. To start tracking a new file, run `chezmoi add ~/.new-thing` once — this copies it into the source tree with the right prefix, and because `[git] autoCommit = true / autoPush = true` is set, the new file is committed and pushed in the same step. After that, the launchd auto-sync picks up all future edits to it automatically.
+
+Rules of thumb when adding a new file:
+
+- **Check for secrets first.** `grep -E 'token|secret|password|BEGIN.*PRIVATE' <path>` — if anything matches, template it with `{{ onepasswordRead "op://..." }}` instead of committing the raw value.
+- **Private by default where permissions matter.** For files that should be 0600 (anything in `~/.ssh/`, most auth-adjacent configs), the `private_` prefix is the mechanism — `chezmoi add` uses it automatically when the live file's mode is already 0600 or the parent dir is 0700.
+- **Prefer `chezmoi add` over manual copy into `home/`.** The command picks the right prefix (`dot_`, `private_`, `executable_`) and the right directory layout. Manual copies invariably miss a prefix and then chezmoi apply silently changes the wrong mode.
+- **For files with absolute home paths, make them templates.** After `chezmoi add`, rename the file in source to add `.tmpl` and replace `/Users/<you>/` with `{{ .chezmoi.homeDir }}`. Commit — otherwise the new machine with a different username breaks.
+- **If the path isn't auto-sync safe** (contains cache/session/history data that'll churn), add a pattern to `home/.chezmoiignore` and/or `.gitignore` BEFORE running `chezmoi add` so nothing noisy gets captured.
+- **To stop managing a file**, `chezmoi forget <path>` (leaves live file alone, drops from source) or `chezmoi destroy <path>` (removes from both). autoCommit handles the git side either way.
 
 ### When you pull from the other machine
 
