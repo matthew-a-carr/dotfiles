@@ -1,4 +1,7 @@
-Include /Users/mattcarr@hellobenefex.com/.colima/ssh_config
+Include ~/.colima/ssh_config
+
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 Host github.com
   AddKeysToAgent yes
