@@ -35,6 +35,17 @@ defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.config/it
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile -bool true
 
+# ---- launchd auto-sync agent ----
+agent_label="com.mattcarr.chezmoi-autosync"
+agent_plist="$HOME/Library/LaunchAgents/$agent_label.plist"
+if [ -f "$agent_plist" ]; then
+  mkdir -p "$HOME/Library/Logs"
+  # Unload first (idempotent reload) then load. bootstrap errors if already loaded.
+  launchctl bootout "gui/$(id -u)/$agent_label" 2>/dev/null || true
+  launchctl bootstrap "gui/$(id -u)" "$agent_plist"
+  say "Loaded launchd agent: $agent_label (runs chezmoi re-add every 15 min)"
+fi
+
 # ---- gitleaks pre-commit hook (for this repo) ----
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 hook="$repo_dir/.git/hooks/pre-commit"
