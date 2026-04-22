@@ -21,23 +21,12 @@ For **auto-sync commits**, `~/.config/chezmoi/chezmoi.toml` sets:
 
 ```toml
 [git]
-commitMessageTemplate = """
-{{- if eq (len .Items) 1 -}}
-chore(chezmoi): update {{ (index .Items 0).TargetRelPath }}
-{{- else -}}
-chore(chezmoi): sync {{ len .Items }} files
-
-{{ range .Items }}- {{ .TargetRelPath }}
-{{ end -}}
-{{- end -}}
-"""
+commitMessageTemplate = "chore(chezmoi): auto-sync"
 ```
 
-Produces messages like:
-- Single file: `chore(chezmoi): update dot_zshrc.tmpl`
-- Multiple files: `chore(chezmoi): sync 3 files` + bullet list in body
+Every auto-commit produced by the launchd agent (or any `chezmoi re-add`/`chezmoi add`) uses this literal message. The same line is baked into `.chezmoi.toml.tmpl` so any new machine's `chezmoi init` inherits it.
 
-The same template is baked into `.chezmoi.toml.tmpl` so any new machine's `chezmoi init` inherits it.
+A more detailed per-file template was attempted using chezmoi 2.70.2's `.Items` template variable, but it failed at runtime (`map has no entry for key "Items"` — variable naming differs across chezmoi versions and is not reliably documented). Since auto-sync commits are low-value for archaeology (the diff is always the source of truth), a static message is the pragmatic choice.
 
 For **manual commits**, the convention is documented in `AGENTS.md`. Common types used: `feat`, `fix`, `chore`, `docs`, `refactor`, `revert`. Scopes are free-form (`chezmoi`, `brewfile`, `install`, `zsh`, `adr`, etc.).
 
@@ -45,6 +34,6 @@ For **manual commits**, the convention is documented in `AGENTS.md`. Common type
 
 - **Consistent `git log` surface.** `git log --oneline` is now scannable by intent.
 - **Future-proofs** any tooling we might add later (changelog generation, auto-tagging, PR title lint).
-- **Auto-sync commit messages lose some per-file detail** for multi-file runs — acceptable trade since the body contains the file list.
+- **Auto-sync commit messages lose all per-file detail** — every auto-commit reads `chore(chezmoi): auto-sync`. The *diff* is the source of truth, not the subject line. Acceptable for a personal dotfiles repo; noisy for one collaborating multiple humans.
 - **Discipline required on manual commits.** The pre-commit hook does NOT lint commit messages; this is a convention, not enforcement. If it drifts we can add commitlint later.
 - **Existing history is unchanged.** We don't rewrite; only commits from this point onward follow the format.

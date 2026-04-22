@@ -36,13 +36,4 @@ args = ["--wait"]
 [git]
 autoCommit = true
 autoPush = true
-commitMessageTemplate = """
-{{`{{- if eq (len .Items) 1 -}}`}}
-chore(chezmoi): update {{`{{ (index .Items 0).TargetRelPath }}`}}
-{{`{{- else -}}`}}
-chore(chezmoi): sync {{`{{ len .Items }}`}} files
-
-{{`{{ range .Items }}- {{ .TargetRelPath }}`}}
-{{`{{ end -}}`}}
-{{`{{- end -}}`}}
-"""
+commitMessageTemplate = "chore(chezmoi): auto-sync"
