@@ -4,3 +4,10 @@
 **/*.sqlite
 **/*.sqlite-shm
 **/*.sqlite-wal
+
+# Auth stores that live inside otherwise-trackable dirs
+.config/gh/hosts.yml
+.config/gh/state.yml
+.config/github-copilot/**
+.config/op/**
+.config/gcloud/**
