@@ -131,6 +131,9 @@ alias cma="chezmoi apply"
 alias cmr="chezmoi re-add"
 alias cme="chezmoi edit --apply"
 alias csync="chezmoi re-add && echo '[csync] synced — auto-commit + auto-push handled by chezmoi'"
+alias csynclog="tail -40 ~/Library/Logs/chezmoi-autosync.log"
+alias csynctail="tail -f ~/Library/Logs/chezmoi-autosync.log"
+alias csyncerr='grep -iE "error|conflict|rejected|fatal" ~/Library/Logs/chezmoi-autosync.log | tail -20'
 
 # Claude
 function load-mongo-dev() {
