@@ -1,0 +1,23 @@
+{
+  "banner": "never",
+  "last_logged_in_user": {
+    "host": "https://github.com",
+    "login": "matthew-a-carr"
+  },
+  "logged_in_users": [
+    {
+      "host": "https://github.com",
+      "login": "matthew-a-carr"
+    }
+  ],
+  "render_markdown": true,
+  "screen_reader": false,
+  "theme": "auto",
+  "trusted_folders": [
+    "/Users/mattcarr@hellobenefex.com/git/onehub-security-gateway",
+    "/Users/mattcarr@hellobenefex.com/git"
+  ],
+  "model": "gpt-5.4",
+  "effortLevel": "high",
+  "firstLaunchAt": "2026-03-11T00:00:00.000Z"
+}

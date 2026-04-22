@@ -1,0 +1,36 @@
+# This is Git's per-user configuration file.
+[user]
+	name = {{ .git.name }}
+	email = {{ .git.email }}
+{{- if .git.signingkey }}
+	signingkey = {{ .git.signingkey }}
+{{- end }}
+[core]
+	autocrlf = input
+	eol = lf
+[commit]
+{{- if .git.signingkey }}
+	gpgsign = true
+{{- end }}
+	template = {{ .chezmoi.homeDir }}/.gitmessage
+[tag]
+{{- if .git.signingkey }}
+	gpgSign = true
+{{- end }}
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[pull]
+	rebase = false
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[gpg]
+	program = /opt/homebrew/bin/gpg

@@ -1,0 +1,55 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(ls)",
+      "Shell(git status)"
+    ],
+    "deny": []
+  },
+  "version": 1,
+  "editor": {
+    "vimMode": false
+  },
+  "model": {
+    "modelId": "claude-4.6-opus-high-thinking",
+    "displayModelId": "claude-4.6-opus-high-thinking",
+    "displayName": "Opus 4.6 1M Thinking",
+    "displayNameShort": "Opus 4.6 1M Thinking",
+    "aliases": [],
+    "maxMode": false
+  },
+  "hasChangedDefaultModel": false,
+  "maxMode": false,
+  "modelParameters": {
+    "claude-4.6-opus-high-thinking": []
+  },
+  "selectedModel": {
+    "modelId": "claude-4.6-opus-high-thinking",
+    "parameters": []
+  },
+  "privacyCache": {
+    "ghostMode": true,
+    "privacyMode": 2,
+    "updatedAt": 1774600327640
+  },
+  "authInfo": {
+    "email": "mattcarr@benifex.com",
+    "displayName": "",
+    "teamId": 18345905,
+    "teamName": "Zellis Group Cursor Trial_Jan 26",
+    "userId": 344229299,
+    "authId": "auth0|user_01KM2JSJRQBFVQWY0J8JWT2WS4"
+  },
+  "network": {
+    "useHttp1ForAgent": false
+  },
+  "approvalMode": "allowlist",
+  "sandbox": {
+    "mode": "disabled",
+    "networkAccess": "user_config_with_defaults"
+  },
+  "attribution": {
+    "attributeCommitsToAgent": true,
+    "attributePRsToAgent": true
+  }
+}
