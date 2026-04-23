@@ -30,6 +30,24 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 defaults write com.apple.screencapture type -string "png"
 defaults write com.apple.screencapture disable-shadow -bool true
 
+say "Appearance: dark mode"
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+
+say "Trackpad: max speed, tap-to-click, three-finger drag"
+# Tracking speed (float 0–3, 3 is max)
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 3
+# Tap to click — both Bluetooth external and built-in
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+# Three-finger drag
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+
+say "Mouse: natural scroll direction"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+
 say "Misc: expand save/print panels, disable auto-correct, disable smart quotes"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
@@ -38,6 +56,14 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 say "Restart affected apps"
-killall Finder Dock SystemUIServer 2>/dev/null || true
+killall Finder Dock SystemUIServer cfprefsd 2>/dev/null || true
 
-echo "Done. Some settings only take effect after logout/login."
+cat <<'EOF'
+
+Done. A few caveats:
+  - Dark mode + tap-to-click may need a logout/login to take full effect.
+  - Trackpad settings need to be re-seated by System Settings once before
+    some features (like three-finger drag on Sonoma+) become visible in
+    the UI — open System Settings → Trackpad → Point & Click, toggle anything.
+  - If a setting doesn't stick, re-run this script after an initial login.
+EOF
