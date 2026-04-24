@@ -10,14 +10,8 @@ if ! command -v claude >/dev/null 2>&1; then
   exit 0
 fi
 
-mongodb_wrapper="$HOME/.local/bin/claude-mongodb-mcp"
-if [ ! -x "$mongodb_wrapper" ]; then
-  warn "MongoDB MCP wrapper missing or not executable: $mongodb_wrapper"
-  exit 0
-fi
-
-say "Restoring Claude MCP: mongodb"
-claude mcp remove mongodb -s user >/dev/null 2>&1 || true
-claude mcp add -s user mongodb -- "$mongodb_wrapper" >/dev/null
+# MongoDB MCP is disabled by default. The wrapper still lives at
+# ~/.local/bin/claude-mongodb-mcp; to enable it for a session run:
+#   claude mcp add -s user mongodb -- "$HOME/.local/bin/claude-mongodb-mcp"
 
 echo "claude-mcp-restore.sh done."

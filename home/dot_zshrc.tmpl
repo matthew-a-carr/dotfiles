@@ -142,11 +142,18 @@ function load-mongo-dev() {
 function load-mongo-prod() {
   export MONGODB_URI=$(op read "op://Employee/Mongo Prod/notesPlain")
 }
+# MongoDB MCP is not registered in ~/.claude.json by default (avoids a 1Password
+# hit on every Claude Code launch). These wrappers inject it per-session via
+# --mcp-config and pre-populate MONGODB_URI so the wrapper script skips `op read`.
+function _claude_with_mongo_mcp() {
+  local mcp_json='{"mcpServers":{"mongodb":{"type":"stdio","command":"'"$HOME"'/.local/bin/claude-mongodb-mcp","args":[],"env":{}}}}'
+  claude --mcp-config "$mcp_json" "$@"
+}
 function claude-mongo-dev() {
-  MONGODB_URI=$(op read "op://Employee/Mongo Dev/notesPlain") claude "$@"
+  MONGODB_URI=$(op read "op://Employee/Mongo Dev/notesPlain") _claude_with_mongo_mcp "$@"
 }
 function claude-mongo-prod() {
-  MONGODB_URI=$(op read "op://Employee/Mongo Prod/notesPlain") claude "$@"
+  MONGODB_URI=$(op read "op://Employee/Mongo Prod/notesPlain") _claude_with_mongo_mcp "$@"
 }
 
 # Functions
