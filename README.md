@@ -18,8 +18,7 @@ Secrets live in 1Password and are pulled in at apply time. IDE settings sync via
 │   └── dot_*                 everything that lands in ~
 ├── scripts/
 │   ├── bootstrap.sh          oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm pointer, Claude MCP, pre-commit hook
-│   ├── claude-mcp-restore.sh restore user-scoped Claude MCP entries
-│   └── ssh-restore.sh        optional fallback: pull id_ed25519 from 1Password
+│   └── claude-mcp-restore.sh restore user-scoped Claude MCP entries
 ├── macos/defaults.sh         `defaults write` tweaks
 ├── .gitignore                secret-file backstop
 └── .gitleaks.toml            pre-commit secret scanner rules
@@ -146,9 +145,9 @@ Nothing sensitive enters the repo. Defences:
 |---|---|
 | `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev` / `claude-mongo-dev`, Claude MongoDB MCP wrapper |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
-| `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional) |
+| `op://Employee/id_ed25519` | 1Password SSH agent (auth + signing — never read by any script) |
 
-SSH + git commit signing go through the 1Password SSH agent — no keys on disk, no GPG stack. See [ADR 009](docs/decisions/009-ssh-signed-commits-via-1password.md).
+SSH + git commit signing go through the 1Password SSH agent — no keys on disk, no GPG stack. See [ADR 013](docs/decisions/013-1password-ssh-agent-sole-mechanism.md) and [ADR 009](docs/decisions/009-ssh-signed-commits-via-1password.md).
 
 ## What's managed here vs elsewhere
 

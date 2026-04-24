@@ -23,7 +23,7 @@ Never commit secrets. Use 1Password references (`op://...`) or chezmoi `.tmpl` f
 │   ├── dot_claude/…         → ~/.claude/…
 │   ├── private_dot_ssh/…    → ~/.ssh/… (dir mode 700)
 │   └── …
-├── scripts/                 bootstrap.sh, ssh-restore.sh
+├── scripts/                 bootstrap.sh, claude-mcp-restore.sh
 └── macos/defaults.sh        system tweaks
 ```
 
@@ -115,9 +115,9 @@ Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward
 |---|---|
 | `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev`, `claude-mongo-dev`; Claude MongoDB MCP wrapper |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
-| `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional fallback — 1Password SSH agent is the primary mechanism) |
+| `op://Employee/id_ed25519` | 1Password SSH agent reads it directly for auth + signing. Never materialised on disk; no script reads it. |
 
-Git commits are signed via the 1Password SSH agent (`gpg.format = ssh`, `gpg.ssh.program = op-ssh-sign`). No GPG stack, no `~/.gnupg`. See ADR 009.
+Git commits are signed via the 1Password SSH agent (`gpg.format = ssh`, `gpg.ssh.program = op-ssh-sign`). No GPG stack, no `~/.gnupg`. See ADR 013 and ADR 009.
 
 ## Before committing manually
 

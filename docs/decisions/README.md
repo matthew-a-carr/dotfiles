@@ -12,7 +12,7 @@ See [AGENTS.md](../../AGENTS.md) for when to write one and naming rules.
 | [001](001-chezmoi-for-dotfiles-management.md) | chezmoi for Dotfiles Management | 2026-04-22 | Accepted |
 | [002](002-single-repo-work-personal-role-prompt.md) | Single Repo with Work/Personal Role Prompt | 2026-04-22 | Accepted |
 | [003](003-employer-agnostic-dotfiles-scope.md) | Employer-Agnostic Dotfiles Scope | 2026-04-22 | Accepted |
-| [004](004-1password-ssh-agent-for-authentication.md) | 1Password SSH Agent for Authentication | 2026-04-22 | Accepted |
+| [004](004-1password-ssh-agent-for-authentication.md) | 1Password SSH Agent for Authentication | 2026-04-22 | Superseded by [013](013-1password-ssh-agent-sole-mechanism.md) |
 | [005](005-agents-md-source-of-truth-with-claude-symlink.md) | AGENTS.md Source of Truth with CLAUDE.md Symlink | 2026-04-22 | Accepted |
 | [006](006-launchd-auto-sync-with-chezmoi-autocommit-autopush.md) | Launchd Bidirectional Auto-Sync with chezmoi autoCommit + autoPush | 2026-04-22 | Accepted |
 | [007](007-vendor-sync-for-ide-settings.md) | Vendor Sync for IDE Settings (JetBrains + VSCode) | 2026-04-22 | Accepted |
@@ -21,3 +21,4 @@ See [AGENTS.md](../../AGENTS.md) for when to write one and naming rules.
 | [010](010-conventional-commits.md) | Conventional Commits Repo-Wide | 2026-04-22 | Accepted |
 | [011](011-restore-claude-mcp-with-bootstrap-scripts.md) | Restore Claude MCP with Bootstrap Scripts | 2026-04-24 | Accepted |
 | [012](012-repo-local-agent-skill-for-ai-driven-initialisation.md) | Repo-Local Agent Skill for AI-Driven Initialisation | 2026-04-24 | Accepted |
+| [013](013-1password-ssh-agent-sole-mechanism.md) | 1Password SSH Agent as Sole SSH Mechanism | 2026-04-24 | Accepted |

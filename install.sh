@@ -69,13 +69,7 @@ chezmoi init --apply --source "$repo_dir"
 say "Running post-install bootstrap"
 "$repo_dir/scripts/bootstrap.sh"
 
-# ---- 6. SSH (optional — only needed if you don't use the 1Password SSH agent) ----
-# 1Password handles SSH via its agent. On a new machine, enable the 1Password
-# SSH agent in the app's Developer settings and SSH just works. Git commits are
-# SSH-signed through the same agent (see ADR 009). scripts/ssh-restore.sh exists
-# only as an optional fallback.
-
-# ---- 7. macOS defaults ----
+# ---- 6. macOS defaults ----
 say "Applying macOS defaults"
 "$repo_dir/macos/defaults.sh"
 

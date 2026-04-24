@@ -1,7 +1,7 @@
 # ADR 004: 1Password SSH Agent for Authentication
 
 **Date:** 2026-04-22
-**Status:** Accepted
+**Status:** Superseded by [ADR 013](013-1password-ssh-agent-sole-mechanism.md)
 
 ## Context
 
