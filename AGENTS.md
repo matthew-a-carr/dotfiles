@@ -23,7 +23,7 @@ Never commit secrets. Use 1Password references (`op://...`) or chezmoi `.tmpl` f
 │   ├── dot_claude/…         → ~/.claude/…
 │   ├── private_dot_ssh/…    → ~/.ssh/… (dir mode 700)
 │   └── …
-├── scripts/                 bootstrap.sh, claude-mcp-restore.sh
+├── scripts/                 bootstrap.sh, claude-mcp-restore.sh, verify-new-laptop.sh
 └── macos/defaults.sh        system tweaks
 ```
 

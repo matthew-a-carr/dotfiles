@@ -17,8 +17,9 @@ Secrets live in 1Password and are pulled in at apply time. IDE settings sync via
 │   ├── .chezmoiignore        backstop (node_modules, .DS_Store, sqlite)
 │   └── dot_*                 everything that lands in ~
 ├── scripts/
-│   ├── bootstrap.sh          oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm pointer, Claude MCP, pre-commit hook
-│   └── claude-mcp-restore.sh restore user-scoped Claude MCP entries
+│   ├── bootstrap.sh            oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm pointer, Claude MCP, pre-commit hook
+│   ├── claude-mcp-restore.sh   restore user-scoped Claude MCP entries
+│   └── verify-new-laptop.sh    post-install acceptance test
 ├── macos/defaults.sh         `defaults write` tweaks
 ├── .gitignore                secret-file backstop
 └── .gitleaks.toml            pre-commit secret scanner rules
