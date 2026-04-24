@@ -17,10 +17,12 @@ Observations when we tried to capture these into the dotfiles repo:
 
 **Skills are generally NOT managed in dotfiles.** They live in their authoritative source repos (`Backend_AI_Tools`, `agent-scripts`) and get linked/copied into `~/.claude/skills/`, `~/.codex/skills/`, `~/.cursor/rules/` by a company-specific setup repo (ADR 003) after those source repos are cloned.
 
-One exception is allowed: a small repo-local
-`.agents/skills/new-laptop-onboarding` skill may live in this repo because it
-documents how to bootstrap this repo itself before the external skill repos are
-available. It is not synced into global `~/.claude/skills` or `~/.codex/skills`.
+One exception is allowed by
+[ADR 012](012-repo-local-agent-skill-for-ai-driven-initialisation.md): a small
+repo-local `.agents/skills/new-laptop-onboarding` skill may live in this repo
+because it documents how to bootstrap this repo itself before the external
+skill repos are available. It is not synced into global `~/.claude/skills` or
+`~/.codex/skills`.
 
 `home/.chezmoiignore` + `.gitignore` keep large or external skill directories
 out of chezmoi's view.

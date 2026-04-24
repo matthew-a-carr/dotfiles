@@ -20,3 +20,4 @@ See [AGENTS.md](../../AGENTS.md) for when to write one and naming rules.
 | [009](009-ssh-signed-commits-via-1password.md) | SSH-Signed Commits via 1Password Agent | 2026-04-22 | Accepted |
 | [010](010-conventional-commits.md) | Conventional Commits Repo-Wide | 2026-04-22 | Accepted |
 | [011](011-restore-claude-mcp-with-bootstrap-scripts.md) | Restore Claude MCP with Bootstrap Scripts | 2026-04-24 | Accepted |
+| [012](012-repo-local-agent-skill-for-ai-driven-initialisation.md) | Repo-Local Agent Skill for AI-Driven Initialisation | 2026-04-24 | Accepted |

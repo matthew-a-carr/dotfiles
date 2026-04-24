@@ -18,8 +18,8 @@ Options considered:
 A `LaunchAgent` at `~/Library/LaunchAgents/com.mattcarr.chezmoi-autosync.plist` (managed via `home/Library/LaunchAgents/*.plist.tmpl`) runs every 15 minutes and on login (`RunAtLoad = true`). Each run does:
 
 ```bash
-chezmoi --no-tty update                    # git pull in source dir, then chezmoi apply → live
-chezmoi --no-tty re-add --force --keep-going # live → source; autoCommit + autoPush if drift
+chezmoi --no-tty --force update              # git pull in source dir, then chezmoi apply → live
+chezmoi --no-tty --force re-add --keep-going # live → source; autoCommit + autoPush if drift
 ```
 
 Run in that order with `&&` so re-add only runs if update succeeded. The
