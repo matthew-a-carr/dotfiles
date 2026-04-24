@@ -31,7 +31,7 @@ If an AI session is driving the setup, start with
 [`docs/new-laptop-ai-onboarding.md`](docs/new-laptop-ai-onboarding.md). It gives
 the session the install runbook and points it at the post-install verifier.
 This repo also includes a project-local Agent Skill at
-`.agents/skills/new-laptop-onboarding/SKILL.md`.
+`.claude/skills/new-laptop-onboarding/SKILL.md`.
 
 ```bash
 # One-time OS setup

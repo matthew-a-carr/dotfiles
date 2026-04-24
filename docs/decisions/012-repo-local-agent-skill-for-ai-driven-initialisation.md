@@ -20,12 +20,13 @@ initialising this dotfiles repo itself.
 Add one repo-local Agent Skill at:
 
 ```text
-.agents/skills/new-laptop-onboarding/SKILL.md
+.claude/skills/new-laptop-onboarding/SKILL.md
 ```
 
-The skill follows the Agent Skills project-local directory convention and is
-not synced into `~/.claude/skills`, `~/.codex/skills`, or any other global skill
-directory. It points agents to the repo runbook and verification script:
+The skill follows the Claude Code project-local skill directory convention
+(`.claude/skills/<name>/SKILL.md`, auto-discovered when Claude Code launches
+from the repo) and is not synced into `~/.claude/skills`, `~/.codex/skills`,
+or any other global skill directory. It points agents to the repo runbook and verification script:
 
 - `docs/new-laptop-ai-onboarding.md`
 - `scripts/verify-new-laptop.sh`

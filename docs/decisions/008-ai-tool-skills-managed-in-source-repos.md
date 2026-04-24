@@ -19,7 +19,7 @@ Observations when we tried to capture these into the dotfiles repo:
 
 One exception is allowed by
 [ADR 012](012-repo-local-agent-skill-for-ai-driven-initialisation.md): a small
-repo-local `.agents/skills/new-laptop-onboarding` skill may live in this repo
+repo-local `.claude/skills/new-laptop-onboarding` skill may live in this repo
 because it documents how to bootstrap this repo itself before the external
 skill repos are available. It is not synced into global `~/.claude/skills` or
 `~/.codex/skills`.
