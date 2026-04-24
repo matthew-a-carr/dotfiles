@@ -84,17 +84,22 @@ context_bar() {
 # --- Build output ---
 parts=()
 
-# Directory
-parts+=("$(printf "${CYAN}${BOLD}%s${RESET}" "$dir")")
-
-# Session name (if set)
-if [ -n "$session_name" ]; then
-  parts+=("$(printf "${MAGENTA}[%s]${RESET}" "$session_name")")
+# Directory — linkify to the GitHub repo (resolves via git remote, so worktrees work)
+repo_url=""
+remote_url=$(git -C "$cwd" config --get remote.origin.url 2>/dev/null)
+if [ -n "$remote_url" ]; then
+  # git@github.com:owner/repo(.git) -> https://github.com/owner/repo
+  # https://github.com/owner/repo(.git) -> https://github.com/owner/repo
+  repo_url=$(echo "$remote_url" \
+    | sed -E 's#^git@github\.com:#https://github.com/#' \
+    | sed -E 's#\.git$##')
 fi
-
-# Git worktree branch
-if [ -n "$worktree_branch" ]; then
-  parts+=("$(printf "${BLUE}(wt:%s)${RESET}" "$worktree_branch")")
+if [ -n "$repo_url" ]; then
+  OSC8_OPEN=$'\033]8;;'"$repo_url"$'\033\\'
+  OSC8_CLOSE=$'\033]8;;\033\\'
+  parts+=("$(printf "%s${CYAN}${BOLD}%s${RESET}%s" "$OSC8_OPEN" "$dir" "$OSC8_CLOSE")")
+else
+  parts+=("$(printf "${CYAN}${BOLD}%s${RESET}" "$dir")")
 fi
 
 # Agent name
