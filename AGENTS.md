@@ -104,7 +104,7 @@ Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward
 - Hard-code absolute paths like `/Users/mattcarr@hellobenefex.com/...` — use `{{ .chezmoi.homeDir }}` instead.
 - Commit `.codex/auth.json`, `.gemini/oauth_creds.json`, `.claude.json`, `~/.npmrc` (has `_authToken`), `~/.ssh/id_*` (private keys). All are in `.gitignore`.
 - Sync Claude MCP by committing `~/.claude.json`; add/update wrapper scripts and `scripts/claude-mcp-restore.sh` instead.
-- Manage Claude/Codex/Cursor **skills** in this repo. They live in `Backend_AI_Tools` / `agent-scripts` and link into `~/.claude/skills/` etc.
+- Manage global Claude/Codex/Cursor **skills** in this repo, except for the small repo-local bootstrap-only `new-laptop-onboarding` skill. Normal skills live in `Backend_AI_Tools` / `agent-scripts` and link into `~/.claude/skills/` etc.
 - Commit IntelliJ / VSCode settings folders. Use vendor Settings Sync instead.
 
 ## Secrets that ARE wired up

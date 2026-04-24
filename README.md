@@ -30,6 +30,8 @@ Secrets live in 1Password and are pulled in at apply time. IDE settings sync via
 If an AI session is driving the setup, start with
 [`docs/new-laptop-ai-onboarding.md`](docs/new-laptop-ai-onboarding.md). It gives
 the session the install runbook and points it at the post-install verifier.
+This repo also includes a project-local Agent Skill at
+`.agents/skills/new-laptop-onboarding/SKILL.md`.
 
 ```bash
 # One-time OS setup
@@ -156,7 +158,7 @@ SSH + git commit signing go through the 1Password SSH agent — no keys on disk,
 | Git (`.gitconfig` with templated identity, `.gitmessage`, `.git-coauthors`) | — |
 | Vim (`.vimrc`) | `.vim_runtime` → amix/vimrc repo, cloned by bootstrap |
 | Ghostty, iTerm2 prefs | — |
-| Claude Code, Codex, Gemini, Cursor, Copilot, Antigravity **settings only**; Claude MCP restore scripts | Their skills/rules/plugins → Backend_AI_Tools / agent-scripts (separate repo) |
+| Claude Code, Codex, Gemini, Cursor, Copilot, Antigravity **settings only**; Claude MCP restore scripts; repo-local bootstrap skill | Normal global skills/rules/plugins → Backend_AI_Tools / agent-scripts (separate repo) |
 | SSH `config`, `known_hosts`, `id_ed25519.pub` | Private key → 1Password |
 | Brewfiles, VSCode extension list | VSCode settings/keybindings → Settings Sync (GitHub) |
 | — | IntelliJ settings → JetBrains Settings Sync |
@@ -165,7 +167,7 @@ SSH + git commit signing go through the 1Password SSH agent — no keys on disk,
 ## What's NOT in this repo (intentional)
 
 - **Work repo clones.** The list of Benefex repos to `gh repo clone` on day one belongs in a company-specific setup repo — dotfiles outlasts any employer.
-- **AI-tool skills.** Claude/Codex/Cursor skills link to content in `Backend_AI_Tools` / `agent-scripts`. Clone those; their own bootstrap links the skills back into `~/.claude/skills/` etc.
+- **Normal global AI-tool skills.** Claude/Codex/Cursor skills link to content in `Backend_AI_Tools` / `agent-scripts`. Clone those; their own bootstrap links the skills back into `~/.claude/skills/` etc. The only dotfiles-owned exception is the repo-local bootstrap `new-laptop-onboarding` skill.
 - **IntelliJ + VSCode user settings.** Use vendor sync. Keeping them in a repo fights the built-in sync and leaks licenses.
 
 ## Verification
