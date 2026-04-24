@@ -9,7 +9,7 @@
     <array>
         <string>/bin/bash</string>
         <string>-lc</string>
-        <string>echo "--- $(date '+%Y-%m-%d %H:%M:%S') ---" &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty update 2>&amp;1 &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty re-add --force --keep-going 2>&amp;1</string>
+        <string>echo "--- $(date '+%Y-%m-%d %H:%M:%S') ---" &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force update 2>&amp;1 &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force re-add --keep-going 2>&amp;1</string>
     </array>
 
     <key>StartInterval</key>
