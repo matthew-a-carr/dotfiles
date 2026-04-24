@@ -180,6 +180,9 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Docker configuration
+# 1Password SSH agent (for tools reading SSH_AUTH_SOCK directly — e.g. `docker
+# buildx build --ssh default`. ~/.ssh/config's IdentityAgent only covers ssh(1).)
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 export TESTCONTAINERS_HOST_OVERRIDE=localhost
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
