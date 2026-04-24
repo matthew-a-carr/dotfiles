@@ -103,6 +103,7 @@ Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward
 - Put Benefex repo lists in this repo — that's a separate company-setup repo concern.
 - Hard-code absolute paths like `/Users/mattcarr@hellobenefex.com/...` — use `{{ .chezmoi.homeDir }}` instead.
 - Commit `.codex/auth.json`, `.gemini/oauth_creds.json`, `.claude.json`, `~/.npmrc` (has `_authToken`), `~/.ssh/id_*` (private keys). All are in `.gitignore`.
+- Sync Claude MCP by committing `~/.claude.json`; add/update wrapper scripts and `scripts/claude-mcp-restore.sh` instead.
 - Manage Claude/Codex/Cursor **skills** in this repo. They live in `Backend_AI_Tools` / `agent-scripts` and link into `~/.claude/skills/` etc.
 - Commit IntelliJ / VSCode settings folders. Use vendor Settings Sync instead.
 
@@ -112,7 +113,7 @@ Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward
 
 | Reference | Used by |
 |---|---|
-| `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev`, `claude-mongo-dev` |
+| `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev`, `claude-mongo-dev`; Claude MongoDB MCP wrapper |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
 | `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional fallback — 1Password SSH agent is the primary mechanism) |
 

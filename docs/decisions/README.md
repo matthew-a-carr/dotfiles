@@ -19,3 +19,4 @@ See [AGENTS.md](../../AGENTS.md) for when to write one and naming rules.
 | [008](008-ai-tool-skills-managed-in-source-repos.md) | AI Tool Skills Managed in Source Repos, Not Dotfiles | 2026-04-22 | Accepted |
 | [009](009-ssh-signed-commits-via-1password.md) | SSH-Signed Commits via 1Password Agent | 2026-04-22 | Accepted |
 | [010](010-conventional-commits.md) | Conventional Commits Repo-Wide | 2026-04-22 | Accepted |
+| [011](011-restore-claude-mcp-with-bootstrap-scripts.md) | Restore Claude MCP with Bootstrap Scripts | 2026-04-24 | Accepted |

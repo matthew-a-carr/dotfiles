@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Claude MCP wrapper for MongoDB. Keeps the connection string out of Claude config.
+set -euo pipefail
+
+image="${CLAUDE_MONGODB_MCP_IMAGE:-mongodb/mongodb-mcp-server:1.10.0}"
+onepassword_ref="${CLAUDE_MONGODB_MCP_1PASSWORD_REF:-op://Employee/Mongo Dev/notesPlain}"
+connection_string="${MDB_MCP_CONNECTION_STRING:-${MONGODB_URI:-}}"
+
+if [ -z "$connection_string" ]; then
+  if ! command -v op >/dev/null 2>&1; then
+    echo "MONGODB_URI is not set and 1Password CLI is unavailable." >&2
+    exit 1
+  fi
+
+  connection_string="$(op read "$onepassword_ref")"
+fi
+
+if ! command -v docker >/dev/null 2>&1; then
+  echo "docker is required to run the MongoDB MCP server." >&2
+  exit 1
+fi
+
+export MDB_MCP_CONNECTION_STRING="$connection_string"
+export MDB_MCP_READ_ONLY="${MDB_MCP_READ_ONLY:-true}"
+
+exec docker run --rm -i \
+  -e MDB_MCP_CONNECTION_STRING \
+  -e MDB_MCP_READ_ONLY \
+  "$image"

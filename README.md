@@ -122,7 +122,7 @@ Nothing sensitive enters the repo. Defences:
 
 | Reference | Used by |
 |---|---|
-| `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev` / `claude-mongo-dev` |
+| `op://Employee/Mongo Dev/notesPlain` | zsh helpers `load-mongo-dev` / `claude-mongo-dev`, Claude MongoDB MCP wrapper |
 | `op://Employee/Mongo Prod/notesPlain` | zsh helpers |
 | `op://Employee/id_ed25519/private key` | `scripts/ssh-restore.sh` (optional) |
 
@@ -136,7 +136,7 @@ SSH + git commit signing go through the 1Password SSH agent — no keys on disk,
 | Git (`.gitconfig` with templated identity, `.gitmessage`, `.git-coauthors`) | — |
 | Vim (`.vimrc`) | `.vim_runtime` → amix/vimrc repo, cloned by bootstrap |
 | Ghostty, iTerm2 prefs | — |
-| Claude Code, Codex, Gemini, Cursor, Copilot, Antigravity **settings only** | Their skills/rules/plugins → Backend_AI_Tools / agent-scripts (separate repo) |
+| Claude Code, Codex, Gemini, Cursor, Copilot, Antigravity **settings only**; Claude MCP restore scripts | Their skills/rules/plugins → Backend_AI_Tools / agent-scripts (separate repo) |
 | SSH `config`, `known_hosts`, `id_ed25519.pub` | Private key → 1Password |
 | GPG public key | Secret key → 1Password |
 | Brewfiles, VSCode extension list | VSCode settings/keybindings → Settings Sync (GitHub) |

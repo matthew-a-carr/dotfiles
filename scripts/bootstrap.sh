@@ -3,6 +3,7 @@
 set -euo pipefail
 
 say() { printf "\n\033[1;34m==> %s\033[0m\n" "$*"; }
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # ---- oh-my-zsh ----
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -46,8 +47,12 @@ if [ -f "$agent_plist" ]; then
   say "Loaded launchd agent: $agent_label (runs chezmoi re-add every 15 min)"
 fi
 
+# ---- Claude MCP servers ----
+if [ -x "$repo_dir/scripts/claude-mcp-restore.sh" ]; then
+  "$repo_dir/scripts/claude-mcp-restore.sh"
+fi
+
 # ---- gitleaks pre-commit hook (for this repo) ----
-repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 hook="$repo_dir/.git/hooks/pre-commit"
 if [ ! -f "$hook" ]; then
   say "Installing gitleaks pre-commit hook"
