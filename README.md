@@ -17,9 +17,9 @@ Secrets live in 1Password and are pulled in at apply time. IDE settings sync via
 │   ├── .chezmoiignore        backstop (node_modules, .DS_Store, sqlite)
 │   └── dot_*                 everything that lands in ~
 ├── scripts/
-│   ├── bootstrap.sh          oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm pointer, pre-commit hook
-│   ├── ssh-restore.sh        pull id_ed25519 from 1Password
-│   └── gpg-import.sh         pull GPG secret key from 1Password
+│   ├── bootstrap.sh          oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm pointer, Claude MCP, pre-commit hook
+│   ├── claude-mcp-restore.sh restore user-scoped Claude MCP entries
+│   └── ssh-restore.sh        optional fallback: pull id_ed25519 from 1Password
 ├── macos/defaults.sh         `defaults write` tweaks
 ├── .gitignore                secret-file backstop
 └── .gitleaks.toml            pre-commit secret scanner rules
@@ -27,14 +27,18 @@ Secrets live in 1Password and are pulled in at apply time. IDE settings sync via
 
 ## New machine — fresh install
 
+If an AI session is driving the setup, start with
+[`docs/new-laptop-ai-onboarding.md`](docs/new-laptop-ai-onboarding.md). It gives
+the session the install runbook and points it at the post-install verifier.
+
 ```bash
 # One-time OS setup
 xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Clone via HTTPS (no SSH key yet)
-gh auth login
-git clone https://github.com/<you>/dotfiles ~/git/dotfiles
+# Clone via HTTPS (no SSH key yet, no gh required)
+mkdir -p ~/git
+git clone https://github.com/matthew-a-carr/dotfiles ~/git/dotfiles
 
 # Bootstrap
 ~/git/dotfiles/install.sh --role work      # or --role personal
@@ -45,9 +49,14 @@ git clone https://github.com/<you>/dotfiles ~/git/dotfiles
 1. Homebrew → `brew bundle Brewfile.common` + `Brewfile.<role>`
 2. Waits for `op signin` (retry loop, no hard-exit)
 3. `chezmoi init --apply` — renders `home/` → `~`. Prompts once for git identity.
-4. `scripts/bootstrap.sh` — oh-my-zsh, amix/vimrc, SDKMAN, NVM, iTerm2 custom-prefs pointer, pre-commit gitleaks hook
-5. `ssh-restore.sh` + `gpg-import.sh` — keys from 1Password
-6. `macos/defaults.sh` — system preferences
+4. `scripts/bootstrap.sh` — oh-my-zsh, amix/vimrc, SDKMAN, NVM + default Node LTS, iTerm2 custom-prefs pointer, Claude MCP restore, pre-commit gitleaks hook
+5. `macos/defaults.sh` — system preferences
+
+Manual follow-ups after install:
+
+- Enable the 1Password SSH agent in the 1Password app, then re-run `~/git/dotfiles/scripts/bootstrap.sh` if auto-sync was skipped.
+- Run `gh auth login`.
+- Sign in to Claude Code, Codex, Gemini, Antigravity, Cursor, and GitHub Copilot.
 
 ## Migrating an already-configured machine
 
@@ -55,7 +64,8 @@ Your existing personal or work laptop can be brought onto this system non-destru
 
 ```bash
 brew install chezmoi 1password-cli gitleaks
-git clone https://github.com/<you>/dotfiles ~/git/dotfiles
+mkdir -p ~/git
+git clone https://github.com/matthew-a-carr/dotfiles ~/git/dotfiles
 
 # chezmoi init prompts once: role, git name, git email, signingkey.
 # Writes ~/.config/chezmoi/chezmoi.toml. Does NOT touch any dotfiles.
@@ -86,6 +96,16 @@ brew bundle --file Brewfile.personal   # or Brewfile.work
 # Only if you WANT to prune packages not listed:
 ~/git/dotfiles/install.sh --role personal --prune
 ```
+
+## Keeping apps in sync
+
+Brewfiles are maintained intentionally, not auto-dumped from the machine:
+
+- Put packages used on every machine in `Brewfile.common`.
+- Put Benefex-only packages in `Brewfile.work`.
+- Put personal-only packages in `Brewfile.personal`.
+- After adding entries, run `brew bundle check --file Brewfile.common` and the role file.
+- Use `brew bundle dump --file /tmp/Brewfile --describe` only as a discovery aid, then copy the entries you actually want.
 
 ## Day-to-day workflow
 
@@ -138,7 +158,6 @@ SSH + git commit signing go through the 1Password SSH agent — no keys on disk,
 | Ghostty, iTerm2 prefs | — |
 | Claude Code, Codex, Gemini, Cursor, Copilot, Antigravity **settings only**; Claude MCP restore scripts | Their skills/rules/plugins → Backend_AI_Tools / agent-scripts (separate repo) |
 | SSH `config`, `known_hosts`, `id_ed25519.pub` | Private key → 1Password |
-| GPG public key | Secret key → 1Password |
 | Brewfiles, VSCode extension list | VSCode settings/keybindings → Settings Sync (GitHub) |
 | — | IntelliJ settings → JetBrains Settings Sync |
 | macOS `defaults write` tweaks | Full system config → Apple Migration Assistant |
@@ -157,8 +176,10 @@ chezmoi diff                                        # empty after apply
 gitleaks detect --source . --config .gitleaks.toml  # zero findings
 brew bundle check --file Brewfile.common
 brew bundle check --file Brewfile.$(chezmoi data | jq -r .role)
+git lfs version                                     # LFS filters available
+nvm use default                                     # Node default alias works
+claude mcp get mongodb                              # user-scoped Mongo MCP exists
 ssh -T git@github.com                               # key works
-gpg --list-secret-keys                              # secret key present
 git -C . log -1 --show-signature                    # commit signature verifies
 ```
 

@@ -18,11 +18,14 @@ Options considered:
 A `LaunchAgent` at `~/Library/LaunchAgents/com.mattcarr.chezmoi-autosync.plist` (managed via `home/Library/LaunchAgents/*.plist.tmpl`) runs every 15 minutes and on login (`RunAtLoad = true`). Each run does:
 
 ```bash
-chezmoi update   # git pull in source dir, then chezmoi apply → live
-chezmoi re-add   # live → source; autoCommit + autoPush if drift
+chezmoi --no-tty update                    # git pull in source dir, then chezmoi apply → live
+chezmoi --no-tty re-add --force --keep-going # live → source; autoCommit + autoPush if drift
 ```
 
-Run in that order with `&&` so re-add only runs if update succeeded.
+Run in that order with `&&` so re-add only runs if update succeeded. The
+background process must be non-interactive because launchd has no TTY; `--force`
+avoids a single changed managed file blocking every later sync prompt, and
+`--keep-going` lets independent files continue syncing where possible.
 
 In `~/.config/chezmoi/chezmoi.toml`:
 
@@ -39,6 +42,7 @@ stdout/stderr tee'd to `~/Library/Logs/chezmoi-autosync.log` with a timestamp ba
 - **Zero-discipline bidirectional sync** for files chezmoi already tracks. Edit anywhere, it reaches the other machine within ~15 min.
 - **Brand-new files still require `chezmoi add <file>` once** — re-add only catches edits to known files. Documented in `AGENTS.md`.
 - **Scaffolding files outside `home/` (Brewfiles, `install.sh`, scripts/, macos/, README.md, AGENTS.md, docs/)** are NOT auto-synced on the write side — they are on the read side via `git pull` inside `chezmoi update`. Commit them manually.
+- **New machines require the 1Password SSH agent before loading auto-sync** because GitHub URLs are rewritten to SSH. Bootstrap skips loading the launch agent if the agent socket is missing; re-run `scripts/bootstrap.sh` after enabling it.
 - **Auto-commit messages are terse** ("Update .zshrc"). Acceptable; squash before any reflection-worthy moment.
 - **Pre-commit hook (gitleaks) still runs** — a secret that slips in blocks auto-push. User sees the failure via the log; no force-push of secrets.
 

@@ -1,5 +1,5 @@
 testcontainers.reuse.enable=true
-docker.host=unix:///Users/mattcarr@hellobenefex.com/.colima/default/docker.sock
+docker.host=unix://{{ .chezmoi.homeDir }}/.colima/default/docker.sock
 docker.socket.override=/var/run/docker.sock
 host.override=localhost
 # managed by chezmoi

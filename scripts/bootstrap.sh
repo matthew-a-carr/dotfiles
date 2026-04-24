@@ -29,6 +29,13 @@ if [ ! -d "$HOME/.nvm" ]; then
   say "Installing NVM"
   PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
 fi
+if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! -f "$HOME/.nvm/alias/default" ]; then
+  say "Installing default Node.js LTS"
+  # shellcheck disable=SC1091
+  . "$HOME/.nvm/nvm.sh"
+  nvm install --lts >/dev/null
+  nvm alias default 'lts/*' >/dev/null
+fi
 
 # ---- iTerm2: load prefs from dotfiles folder ----
 say "Pointing iTerm2 at ~/.config/iterm2"
@@ -40,11 +47,16 @@ defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile -b
 agent_label="com.mattcarr.chezmoi-autosync"
 agent_plist="$HOME/Library/LaunchAgents/$agent_label.plist"
 if [ -f "$agent_plist" ]; then
-  mkdir -p "$HOME/Library/Logs"
-  # Unload first (idempotent reload) then load. bootstrap errors if already loaded.
-  launchctl bootout "gui/$(id -u)/$agent_label" 2>/dev/null || true
-  launchctl bootstrap "gui/$(id -u)" "$agent_plist"
-  say "Loaded launchd agent: $agent_label (runs chezmoi re-add every 15 min)"
+  ssh_agent_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  if [ -S "$ssh_agent_sock" ]; then
+    mkdir -p "$HOME/Library/Logs"
+    # Unload first (idempotent reload) then load. bootstrap errors if already loaded.
+    launchctl bootout "gui/$(id -u)/$agent_label" 2>/dev/null || true
+    launchctl bootstrap "gui/$(id -u)" "$agent_plist"
+    say "Loaded launchd agent: $agent_label (runs chezmoi re-add every 15 min)"
+  else
+    say "Skipping launchd agent: enable the 1Password SSH agent, then re-run bootstrap.sh"
+  fi
 fi
 
 # ---- Claude MCP servers ----

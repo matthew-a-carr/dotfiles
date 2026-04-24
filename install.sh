@@ -65,14 +65,15 @@ done
 say "Applying chezmoi source (role=$role)"
 chezmoi init --apply --source "$repo_dir"
 
-# ---- 5. Bootstrap (oh-my-zsh, vim_runtime, SDKMAN, NVM, iTerm pointer, pre-commit hook) ----
+# ---- 5. Bootstrap (oh-my-zsh, vim_runtime, SDKMAN, NVM, iTerm pointer, Claude MCP, pre-commit hook) ----
 say "Running post-install bootstrap"
 "$repo_dir/scripts/bootstrap.sh"
 
 # ---- 6. SSH (optional — only needed if you don't use the 1Password SSH agent) ----
-# ssh-restore.sh has been deleted; 1Password handles SSH via its agent.
-# On a new machine, enable the 1Password SSH agent in the app's Developer settings
-# and SSH just works. Git commits are SSH-signed through the same agent (see ADR 009).
+# 1Password handles SSH via its agent. On a new machine, enable the 1Password
+# SSH agent in the app's Developer settings and SSH just works. Git commits are
+# SSH-signed through the same agent (see ADR 009). scripts/ssh-restore.sh exists
+# only as an optional fallback.
 
 # ---- 7. macOS defaults ----
 say "Applying macOS defaults"
@@ -85,6 +86,8 @@ cat <<EOF
 =====================================================
 
 Manual follow-ups (one-time sign-ins):
+  - 1Password app → Developer → enable SSH agent; re-run scripts/bootstrap.sh if auto-sync was skipped
+  - gh auth login
   - JetBrains Toolbox → install IntelliJ → enable Settings Sync
   - VSCode → enable Settings Sync (GitHub)
   - Sign in to Claude Code, Codex, Gemini, Antigravity, Cursor, gh copilot

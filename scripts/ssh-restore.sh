@@ -4,7 +4,7 @@
 set -euo pipefail
 
 key_path="$HOME/.ssh/id_ed25519"
-ref="op://Employee/SSH id_ed25519/private key"
+ref="op://Employee/id_ed25519/private key"
 
 if [ -f "$key_path" ]; then
   echo "SSH key already present at $key_path — leaving untouched."

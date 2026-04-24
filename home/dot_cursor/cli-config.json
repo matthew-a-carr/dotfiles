@@ -29,16 +29,7 @@
   },
   "privacyCache": {
     "ghostMode": true,
-    "privacyMode": 2,
-    "updatedAt": 1774600327640
-  },
-  "authInfo": {
-    "email": "mattcarr@benifex.com",
-    "displayName": "",
-    "teamId": 18345905,
-    "teamName": "Zellis Group Cursor Trial_Jan 26",
-    "userId": 344229299,
-    "authId": "auth0|user_01KM2JSJRQBFVQWY0J8JWT2WS4"
+    "privacyMode": 2
   },
   "network": {
     "useHttp1ForAgent": false

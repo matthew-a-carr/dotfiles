@@ -20,6 +20,12 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! docker info >/dev/null 2>&1; then
+  if command -v colima >/dev/null 2>&1; then
+    colima start >/dev/null
+  fi
+fi
+
 export MDB_MCP_CONNECTION_STRING="$connection_string"
 export MDB_MCP_READ_ONLY="${MDB_MCP_READ_ONLY:-true}"
 
