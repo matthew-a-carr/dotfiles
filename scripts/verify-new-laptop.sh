@@ -47,7 +47,7 @@ check "GitHub CLI authenticated" gh auth status
 check "GitHub SSH authenticated" check_github_ssh
 check "git-lfs available" git lfs version
 check "default Node.js available through nvm" check_nvm_default
-check "Claude MongoDB MCP registered" claude mcp get mongodb
+check "Claude MongoDB MCP wrapper available" test -x "$HOME/.local/bin/claude-mongodb-mcp"
 check "gitleaks clean" gitleaks detect --source "$repo_dir" --config "$repo_dir/.gitleaks.toml" --redact
 
 if [ "$failures" -gt 0 ]; then

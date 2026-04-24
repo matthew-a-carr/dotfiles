@@ -180,7 +180,7 @@ brew bundle check --file Brewfile.common
 brew bundle check --file Brewfile.$(chezmoi data | jq -r .role)
 git lfs version                                     # LFS filters available
 nvm use default                                     # Node default alias works
-claude mcp get mongodb                              # user-scoped Mongo MCP exists
+test -x ~/.local/bin/claude-mongodb-mcp             # Mongo MCP wrapper present (injected per-session by claude-mongo-dev/prod)
 ssh -T git@github.com                               # key works
 git -C . log -1 --show-signature                    # commit signature verifies
 ```
