@@ -186,7 +186,6 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 export TESTCONTAINERS_HOST_OVERRIDE=localhost
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
-export GOOGLE_CLOUD_PROJECT="benefex-onehub-dev"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -216,5 +215,4 @@ eval "$(zoxide init zsh)"
 # AsyncAPI CLI Autocomplete
 
 ASYNCAPI_AC_ZSH_SETUP_PATH={{ .chezmoi.homeDir }}/Library/Caches/@asyncapi/cli/autocomplete/zsh_setup && test -f $ASYNCAPI_AC_ZSH_SETUP_PATH && source $ASYNCAPI_AC_ZSH_SETUP_PATH; # asyncapi autocomplete setup
-
 
