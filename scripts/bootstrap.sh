@@ -62,6 +62,24 @@ for variant in Regular Bold Italic "Bold Italic"; do
   fi
 done
 
+# ---- Docker CLI plugins (compose + buildx) ----
+# Homebrew installs docker-compose and docker-buildx as standalone binaries.
+# They need to be symlinked into ~/.docker/cli-plugins/ for `docker compose`
+# and `docker buildx` to work as subcommands of the docker CLI. Per the
+# brew formulae's caveats: https://formulae.brew.sh/formula/docker-compose
+brew_prefix="$(/opt/homebrew/bin/brew --prefix 2>/dev/null || true)"
+if [ -n "$brew_prefix" ]; then
+  mkdir -p "$HOME/.docker/cli-plugins"
+  for plugin in docker-compose docker-buildx; do
+    target="$brew_prefix/opt/$plugin/bin/$plugin"
+    link="$HOME/.docker/cli-plugins/$plugin"
+    if [ -x "$target" ] && [ ! -L "$link" ]; then
+      say "Linking $plugin into ~/.docker/cli-plugins"
+      ln -sfn "$target" "$link"
+    fi
+  done
+fi
+
 # ---- iTerm2: load prefs from dotfiles folder ----
 say "Pointing iTerm2 at ~/.config/iterm2"
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.config/iterm2"
