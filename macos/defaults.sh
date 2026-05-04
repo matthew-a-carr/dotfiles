@@ -57,6 +57,9 @@ defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClic
 say "Mouse: natural scroll direction"
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
+say "Menu bar: show battery percentage"
+defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
+
 say "Misc: expand save/print panels, disable auto-correct, disable smart quotes"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
