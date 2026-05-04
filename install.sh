@@ -82,13 +82,11 @@ cat <<EOF
  Install complete. Role: $role
 =====================================================
 
-Manual follow-ups (one-time sign-ins):
-  - 1Password app → Developer → enable SSH agent; re-run scripts/bootstrap.sh if auto-sync was skipped
-  - gh auth login
-  - JetBrains Toolbox → install IntelliJ → enable Settings Sync
-  - VSCode → enable Settings Sync (GitHub)
-  - Sign in to Claude Code, Codex, Gemini, Antigravity, Cursor, gh copilot
-  - gcloud auth login && gcloud auth application-default login   (work only)
+Next: complete the manual sign-ins. The full list with login commands
+and validation steps is in docs/post-install-signins.md.
+
+After signing in, run:
+  scripts/verify-new-laptop.sh
 
 Company-specific stuff (repo clones, work skills) lives in a separate repo.
 Dotfiles is done.
