@@ -12,10 +12,20 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 # ---- amix/vimrc ----
-if [ ! -d "$HOME/.vim_runtime" ]; then
+# chezmoi creates ~/.vim_runtime/ to hold my_configs.vim, so checking for the
+# directory's existence isn't enough — we test for a file that only exists
+# after the upstream amix/vimrc has been cloned in.
+if [ ! -f "$HOME/.vim_runtime/install_awesome_vimrc.sh" ]; then
   say "Installing amix/vimrc"
-  git clone --depth 1 https://github.com/amix/vimrc.git "$HOME/.vim_runtime"
-  sh "$HOME/.vim_runtime/install_awesome_vimrc.sh"
+  tmpdir="$(mktemp -d)"
+  git clone --depth 1 https://github.com/amix/vimrc.git "$tmpdir/vimrc"
+  # Copy upstream contents into ~/.vim_runtime without clobbering the
+  # chezmoi-managed my_configs.vim that's already there.
+  mkdir -p "$HOME/.vim_runtime"
+  cp -R "$tmpdir/vimrc/." "$HOME/.vim_runtime/"
+  rm -rf "$tmpdir"
+  # Deliberately not running install_awesome_vimrc.sh: ~/.vimrc is managed by
+  # chezmoi (see home/dot_vimrc) and already contains the right source lines.
 fi
 
 # ---- SDKMAN ----
