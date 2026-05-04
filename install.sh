@@ -55,10 +55,13 @@ if [ "$prune" -eq 1 ]; then
 fi
 
 # ---- 3. 1Password sign-in (retry loop, don't hard-exit) ----
-while ! op whoami >/dev/null 2>&1; do
-  warn "1Password CLI not signed in."
-  echo "   In another terminal: eval \$(op signin)"
-  read -rp "   Press enter once signed in (Ctrl-C to abort): " _
+# `op vault list` is the liveness check rather than `op whoami` because the
+# desktop-app integration with multiple accounts leaves `op whoami` reporting
+# "account is not signed in" even when the CLI can read items via the GUI app.
+while ! op vault list >/dev/null 2>&1; do
+  warn "1Password CLI not reachable."
+  echo "   Open 1Password app, sign in, and enable Settings → Developer → Integrate with 1Password CLI."
+  read -rp "   Press enter once done (Ctrl-C to abort): " _
 done
 
 # ---- 4. chezmoi apply ----

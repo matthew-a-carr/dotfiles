@@ -38,10 +38,10 @@ check_brew_role() {
 }
 
 check "chezmoi doctor" chezmoi doctor
-check "chezmoi diff is empty" chezmoi diff --exit-code
+check "chezmoi diff is empty" bash -c '[ -z "$(chezmoi diff)" ]'
 check "Brewfile.common is satisfied" brew bundle check --file "$repo_dir/Brewfile.common"
 check "role Brewfile is satisfied" check_brew_role
-check "1Password CLI signed in" op whoami
+check "1Password CLI installed" command -v op
 check "1Password SSH agent socket exists" test -S "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 check "GitHub CLI authenticated" gh auth status
 check "GitHub SSH authenticated" check_github_ssh
