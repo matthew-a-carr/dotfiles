@@ -13,7 +13,7 @@ not improvise install steps when a repo script exists.
 1. Locate or clone the repo at `~/git/dotfiles`.
 2. Read `docs/new-laptop-ai-onboarding.md` if present.
 3. Run `~/git/dotfiles/install.sh --role work` unless the user explicitly says this is a personal machine.
-4. Guide required sign-ins: 1Password CLI/app, 1Password SSH agent, GitHub CLI, AI tools, and work `gcloud` auth.
+4. Walk the user through every sign-in listed in `docs/post-install-signins.md`. That file is authoritative — it has the login command and the validation step for each service. Do not improvise from memory.
 5. Run `~/git/dotfiles/scripts/verify-new-laptop.sh`.
 6. For verification failures, distinguish auth/manual failures from deterministic repo bugs.
 7. If a deterministic repo bug is found, edit the repo, validate, commit, and push.
@@ -24,4 +24,5 @@ not improvise install steps when a repo script exists.
 - Do not manage `~/.claude.json`; restore Claude MCP entries through `scripts/claude-mcp-restore.sh`.
 - Maintain Brewfiles intentionally. Do not dump the whole machine into the repo.
 - Re-run `scripts/bootstrap.sh` after enabling the 1Password SSH agent if auto-sync was skipped.
-- Use `scripts/verify-new-laptop.sh` as the acceptance test.
+- Use `scripts/verify-new-laptop.sh` as the acceptance test. `docs/post-install-signins.md` is the sign-in cheatsheet to consult whenever a sign-in question comes up.
+- When fixing deterministic bugs, follow the `AGENTS.md` rule: anything that's "a file/symlink/dir at a known path under ~" goes into the chezmoi source tree (`home/...`), not into imperative shell in `scripts/bootstrap.sh`.
