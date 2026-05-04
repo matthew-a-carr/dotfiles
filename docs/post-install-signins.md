@@ -11,6 +11,7 @@ After `install.sh` and `scripts/bootstrap.sh` finish, you still have to log into
 **Sign in:**
 1. Open `/Applications/1Password.app`, sign in to your account(s).
 2. **Settings → Developer**: enable both *"Integrate with 1Password CLI"* and *"Use the SSH agent"*.
+3. **Settings → Security**: enable **Touch ID**, and bump *Lock automatically* to 1 hour (or whatever you can stand). Untick *"Mac sleeps"* and *"Screensaver starts"* if you want the unlock to persist across lid-close.
 
 **Validate:**
 ```sh
@@ -19,6 +20,8 @@ op vault list --account benefex.1password.eu   # work account
 ```
 
 The agent socket is what `verify-new-laptop.sh` checks. `op whoami` is *not* a reliable check when multiple accounts are registered — it returns "account is not signed in" even when the CLI is fully usable via the GUI integration.
+
+**Reducing prompt fatigue:** every git/SSH operation hits the agent, which prompts for approval each time the vault is locked. Touch ID + a long auto-lock timeout reduces this to "one tap when you sit down, silent until you walk away". There's deliberately no "always allow" option for SSH key use — that would defeat the secure-enclave model. If you can't tolerate the prompt at all, you'd have to drop 1Password as the SSH agent and write a plain key to disk, which we don't recommend.
 
 ### GitHub CLI
 
