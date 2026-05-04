@@ -80,15 +80,19 @@ if [ -x "$repo_dir/scripts/claude-mcp-restore.sh" ]; then
 fi
 
 # ---- gitleaks pre-commit hook (for this repo) ----
+# Re-write the hook every run so older versions get the brew-shellenv shim.
 hook="$repo_dir/.git/hooks/pre-commit"
-if [ ! -f "$hook" ]; then
-  say "Installing gitleaks pre-commit hook"
-  cat > "$hook" <<'HOOK'
+say "Installing gitleaks pre-commit hook"
+cat > "$hook" <<'HOOK'
 #!/usr/bin/env bash
 # Block commits that contain secrets.
+# Source brew shellenv so PATH includes /opt/homebrew/bin even when git is
+# invoked from a non-interactive shell that hasn't sourced ~/.zshrc.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 exec gitleaks protect --staged --redact --config .gitleaks.toml
 HOOK
-  chmod +x "$hook"
-fi
+chmod +x "$hook"
 
 echo "bootstrap.sh done."
