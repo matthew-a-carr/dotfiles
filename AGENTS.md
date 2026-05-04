@@ -97,6 +97,26 @@ Only two places use `{{ .role }}` / `{{ .git.* }}`:
 
 Everything else is common. Benefex-named aliases in `.zshrc` (e.g. `alias reward='cd ~/git/reward'`) stay on both machines — harmless `cd` to missing dirs on personal. Don't sprinkle `{{ if eq .role "work" }}` blocks unless there's a genuine functional conflict.
 
+## Where new config belongs: chezmoi vs bootstrap.sh
+
+When the end state of a setup step is "a particular file, symlink, or directory exists at a particular path under `~`", express it as a chezmoi source — not as imperative shell in `scripts/bootstrap.sh`. chezmoi is the source of truth for `~`; imperative bootstrap steps drift from declarative state, don't show up in `chezmoi diff`, and bypass the auto-sync loop.
+
+Reach for:
+
+- `home/dot_<path>` / `home/private_dot_<path>.tmpl` — for plain files (templated as needed)
+- `home/symlink_<path>.tmpl` — for symlinks (the file's contents become the link target; templated for arch/role)
+- `home/executable_<path>` — when the live file needs the +x bit
+
+`scripts/bootstrap.sh` is reserved for things that *cannot* be expressed as a chezmoi source:
+
+- Cloning an upstream repo (oh-my-zsh, amix/vimrc) into `~`
+- Calling `defaults write` for macOS prefs
+- Loading a launchd agent (`launchctl bootstrap`)
+- Side-effectful installers (SDKMAN curl, NVM curl, font downloads from upstream URLs)
+- Pre-commit hook content under `.git/hooks/` (the `.git` dir isn't tracked)
+
+Concrete example: docker-compose / docker-buildx need to be symlinked into `~/.docker/cli-plugins/` for the `docker compose` and `docker buildx` subcommands to work. That's a symlink at a known path with known contents — chezmoi job. See `home/dot_docker/cli-plugins/symlink_docker-{compose,buildx}.tmpl`.
+
 ## Things to NEVER do
 
 - Commit secrets. `.gitleaks.toml` + pre-commit hook will reject them, but don't test it.
