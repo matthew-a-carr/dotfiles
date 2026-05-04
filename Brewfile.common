@@ -54,8 +54,8 @@ vscode "dbaeumer.vscode-eslint"
 vscode "editorconfig.editorconfig"
 vscode "esbenp.prettier-vscode"
 vscode "eamodio.gitlens"
-vscode "github.copilot"
-vscode "github.copilot-chat"
+# GitHub Copilot + Copilot Chat ship as built-in extensions in VSCode 1.118+,
+# so listing them here causes brew bundle to fail on a downgrade conflict.
 vscode "mechatroner.rainbow-csv"
 vscode "openai.chatgpt"
 vscode "pkief.material-icon-theme"
