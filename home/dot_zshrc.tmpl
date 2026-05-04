@@ -136,11 +136,13 @@ alias csynctail="tail -f ~/Library/Logs/chezmoi-autosync.log"
 alias csyncerr='grep -iE "error|conflict|rejected|fatal" ~/Library/Logs/chezmoi-autosync.log | tail -20'
 
 # Claude
+# OP_ACCOUNT is set inline so these work when the 1Password CLI has multiple
+# accounts registered (the Employee vault lives in the Benefex account).
 function load-mongo-dev() {
-  export MONGODB_URI=$(op read "op://Employee/Mongo Dev/notesPlain")
+  export MONGODB_URI=$(OP_ACCOUNT=benefex.1password.eu op read "op://Employee/Mongo Dev/notesPlain")
 }
 function load-mongo-prod() {
-  export MONGODB_URI=$(op read "op://Employee/Mongo Prod/notesPlain")
+  export MONGODB_URI=$(OP_ACCOUNT=benefex.1password.eu op read "op://Employee/Mongo Prod/notesPlain")
 }
 # MongoDB MCP is not registered in ~/.claude.json by default (avoids a 1Password
 # hit on every Claude Code launch). These wrappers inject it per-session via
@@ -150,10 +152,10 @@ function _claude_with_mongo_mcp() {
   claude --mcp-config "$mcp_json" "$@"
 }
 function claude-mongo-dev() {
-  MONGODB_URI=$(op read "op://Employee/Mongo Dev/notesPlain") _claude_with_mongo_mcp "$@"
+  MONGODB_URI=$(OP_ACCOUNT=benefex.1password.eu op read "op://Employee/Mongo Dev/notesPlain") _claude_with_mongo_mcp "$@"
 }
 function claude-mongo-prod() {
-  MONGODB_URI=$(op read "op://Employee/Mongo Prod/notesPlain") _claude_with_mongo_mcp "$@"
+  MONGODB_URI=$(OP_ACCOUNT=benefex.1password.eu op read "op://Employee/Mongo Prod/notesPlain") _claude_with_mongo_mcp "$@"
 }
 
 # Functions

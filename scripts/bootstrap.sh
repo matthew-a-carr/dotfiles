@@ -37,6 +37,21 @@ if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! -f "$HOME/.nvm/alias/default" ]; then
   nvm alias default 'lts/*' >/dev/null
 fi
 
+# ---- MesloLGS NF fonts (p10k-distributed; match the PostScript name iTerm prefs reference) ----
+# Brewfile installs the Nerd Font cask for general use, but the .ttfs there
+# carry different PostScript names. iTerm's profile expects exactly
+# "MesloLGS-NF-Regular", which is what the powerlevel10k-media repo ships.
+fonts_dir="$HOME/Library/Fonts"
+mkdir -p "$fonts_dir"
+for variant in Regular Bold Italic "Bold Italic"; do
+  fname="MesloLGS NF $variant.ttf"
+  if [ ! -f "$fonts_dir/$fname" ]; then
+    say "Downloading $fname"
+    curl -sSLfo "$fonts_dir/$fname" \
+      "https://github.com/romkatv/powerlevel10k-media/raw/master/${fname// /%20}"
+  fi
+done
+
 # ---- iTerm2: load prefs from dotfiles folder ----
 say "Pointing iTerm2 at ~/.config/iterm2"
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.config/iterm2"

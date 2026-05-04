@@ -12,7 +12,7 @@ if [ -z "$connection_string" ]; then
     exit 1
   fi
 
-  connection_string="$(op read "$onepassword_ref")"
+  connection_string="$(OP_ACCOUNT="${OP_ACCOUNT:-benefex.1password.eu}" op read "$onepassword_ref")"
 fi
 
 if ! command -v docker >/dev/null 2>&1; then

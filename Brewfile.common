@@ -3,6 +3,7 @@
 
 # --- CLI tools ---
 brew "ack"
+brew "bash"
 brew "chezmoi"
 brew "dos2unix"
 brew "gemini-cli"
@@ -26,11 +27,14 @@ brew "zsh-syntax-highlighting"
 # --- Apps ---
 cask "1password"
 cask "1password-cli"
+# Nerd Font with powerline + icon glyphs for Powerlevel10k.
+cask "font-meslo-lg-nerd-font"
 cask "antigravity"
 cask "chatgpt"
 cask "claude"
 cask "claude-code"
 cask "codex"
+cask "codex-app"
 cask "cursor"
 cask "ghostty"
 cask "jetbrains-toolbox"
