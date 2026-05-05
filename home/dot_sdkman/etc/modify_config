@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# chezmoi modify_ script: reads ~/.sdkman/etc/config from stdin, flips
+# sdkman_auto_env to true, writes the result to stdout. Preserves any
+# other settings SDKMAN has written (current and future). Idempotent.
+set -euo pipefail
+sed 's/^sdkman_auto_env=.*/sdkman_auto_env=true/'
