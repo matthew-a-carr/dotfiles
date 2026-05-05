@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "atlassian-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.atlassian.com/v1/sse"
+      ]
+    },
+    "google-cloud-logging": {
+      "serverUrl": "https://logging.googleapis.com/mcp",
+      "authProviderType": "google_credentials"
+    },
+    "slack": {
+      "serverUrl": "https://mcp.slack.com/mcp"
+    }
+  }
+}
