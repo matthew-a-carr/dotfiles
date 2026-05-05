@@ -11,14 +11,6 @@
     "google-cloud-logging": {
       "serverUrl": "https://logging.googleapis.com/mcp",
       "authProviderType": "google_credentials"
-    },
-    "slack": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.slack.com/mcp"
-      ]
     }
   }
 }
