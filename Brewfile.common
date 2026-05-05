@@ -5,6 +5,7 @@
 brew "ack"
 brew "bash"
 brew "chezmoi"
+brew "clippy"
 brew "dos2unix"
 brew "gemini-cli"
 brew "gh"
