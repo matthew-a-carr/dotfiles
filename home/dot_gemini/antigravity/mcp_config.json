@@ -13,7 +13,12 @@
       "authProviderType": "google_credentials"
     },
     "slack": {
-      "serverUrl": "https://mcp.slack.com/mcp"
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.slack.com/mcp"
+      ]
     }
   }
 }
