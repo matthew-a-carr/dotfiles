@@ -5,10 +5,12 @@ set -euo pipefail
 
 say() { printf "\n\033[1;34m==> %s\033[0m\n" "$*"; }
 
-say "Keyboard: fastest key repeat"
+say "Keyboard: fastest key repeat, F-keys as standard function keys"
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# F1–F12 act as F1–F12 by default; hold Fn for the brightness/volume/etc.
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
 
 say "Finder: show hidden files, show all extensions, show path bar"
 defaults write com.apple.finder AppleShowAllFiles -bool true
