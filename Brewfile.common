@@ -32,7 +32,9 @@ cask "font-meslo-lg-nerd-font"
 cask "antigravity"
 cask "chatgpt"
 cask "claude"
-cask "claude-code"
+# Claude Code (CLI) is installed via the upstream installer in
+# scripts/bootstrap.sh — it self-updates to the latest release, which
+# the brew cask doesn't.
 cask "codex"
 cask "codex-app"
 cask "cursor"

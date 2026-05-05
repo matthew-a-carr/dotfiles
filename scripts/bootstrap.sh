@@ -84,6 +84,15 @@ if [ -f "$agent_plist" ]; then
   fi
 fi
 
+# ---- Claude Code (CLI, upstream installer) ----
+# We don't use the brew cask: it lags behind. The upstream script
+# installs into ~/.local/share/claude/versions/<v>/ and symlinks
+# ~/.local/bin/claude. Idempotent — only downloads when out of date.
+if ! command -v claude >/dev/null 2>&1 || ! claude --version >/dev/null 2>&1; then
+  say "Installing Claude Code via upstream installer"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 # ---- Claude MCP servers ----
 if [ -x "$repo_dir/scripts/claude-mcp-restore.sh" ]; then
   "$repo_dir/scripts/claude-mcp-restore.sh"
