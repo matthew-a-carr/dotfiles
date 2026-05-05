@@ -7,7 +7,11 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/bash</string>
+        <!-- /bin/bash is 3.2 on macOS; some helpers we source (SDKMAN's
+             sdkman-path-helpers.sh) use bash 4 syntax. Use the brewed
+             bash so sourced files don't error with "bad substitution".
+             Brewfile.common pins this binary. -->
+        <string>/opt/homebrew/bin/bash</string>
         <string>-lc</string>
         <string>echo "--- $(date '+%Y-%m-%d %H:%M:%S') ---" &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force update 2>&amp;1 &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force re-add --keep-going 2>&amp;1</string>
     </array>
