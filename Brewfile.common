@@ -37,6 +37,7 @@ cask "claude"
 # the brew cask doesn't.
 cask "codex"
 cask "codex-app"
+cask "copilot-cli"
 cask "cursor"
 cask "ghostty"
 cask "jetbrains-toolbox"
