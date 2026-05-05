@@ -49,6 +49,7 @@ cask "rectangle"
 cask "spotify"
 cask "visual-studio-code"
 cask "whatsapp"
+cask "wispr-flow"
 
 # --- VSCode extensions (editor/language-agnostic baseline) ---
 vscode "anthropic.claude-code"
