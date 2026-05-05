@@ -84,6 +84,20 @@ if [ -f "$agent_plist" ]; then
   fi
 fi
 
+# ---- Terraform (via tfenv) ----
+# tfenv reads ~/.config/tfenv/version (managed by chezmoi:
+# home/dot_config/tfenv/version) and falls back to .terraform-version files
+# inside projects. `tfenv install` with no args installs the version named
+# in the active version file if it isn't already there. Skips entirely on a
+# personal machine where tfenv isn't installed (it's in Brewfile.work).
+if command -v tfenv >/dev/null 2>&1 && [ -f "$HOME/.config/tfenv/version" ]; then
+  pinned="$(cat "$HOME/.config/tfenv/version")"
+  if ! tfenv list 2>/dev/null | grep -qE "^[* ]+${pinned//./\\.}"; then
+    say "Installing Terraform $pinned via tfenv"
+    tfenv install "$pinned" >/dev/null
+  fi
+fi
+
 # ---- Claude Code (CLI, upstream installer) ----
 # We don't use the brew cask: it lags behind. The upstream script
 # installs into ~/.local/share/claude/versions/<v>/ and symlinks
