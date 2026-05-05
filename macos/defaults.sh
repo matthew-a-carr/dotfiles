@@ -55,6 +55,21 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightC
 defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 0
+# Suppress three-finger swipe gestures (they conflict with three-finger drag)
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 0
+# Four-finger gestures: swipe between Spaces, Mission Control, App Exposé, Launchpad
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerHorizSwipeGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerVertSwipeGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerPinchGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFiveFingerPinchGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerHorizSwipeGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerVertSwipeGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerPinchGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFiveFingerPinchGesture -int 2
+defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 
 say "Mouse: natural scroll direction"
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
@@ -62,12 +77,52 @@ defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 say "Menu bar: show battery percentage"
 defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
 
-say "Misc: expand save/print panels, disable auto-correct, disable smart quotes"
+say "Misc: expand save/print panels, disable auto-correct, disable smart quotes/dashes/caps/periods"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+say "Windows: always prefer tabs, don't minimise on title-bar double-click"
+defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
+defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
+
+say "Dock: magnification, snappy autohide timing"
+defaults write com.apple.dock magnification -bool true
+defaults write com.apple.dock largesize -int 41
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.2
+
+say "Hot corners: bottom-right → Quick Note, others disabled"
+defaults write com.apple.dock wvous-br-corner -int 14
+defaults write com.apple.dock wvous-br-modifier -int 0
+defaults write com.apple.dock wvous-tl-corner -int 0
+defaults write com.apple.dock wvous-tl-modifier -int 0
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+defaults write com.apple.dock wvous-bl-corner -int 0
+defaults write com.apple.dock wvous-bl-modifier -int 0
+
+say "Finder: default to column view"
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+say "Clock: show seconds, date, day of week, AM/PM"
+defaults write com.apple.menuextra.clock ShowSeconds -bool true
+defaults write com.apple.menuextra.clock ShowDate -int 1
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+defaults write com.apple.menuextra.clock ShowAMPM -bool true
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+
+say "Control Center: show Bluetooth and Wi-Fi in menu bar"
+defaults write com.apple.controlcenter "NSStatusItem Visible WiFi" -bool true
+defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
+
+say "Spring-loading: enabled with default delay"
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+defaults write NSGlobalDomain com.apple.springing.delay -float 0.5
 
 say "Restart affected apps"
 killall Finder Dock SystemUIServer cfprefsd 2>/dev/null || true
