@@ -13,7 +13,7 @@
              Brewfile.common pins this binary. -->
         <string>/opt/homebrew/bin/bash</string>
         <string>-lc</string>
-        <string>echo "--- $(date '+%Y-%m-%d %H:%M:%S') ---" &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force update 2>&amp;1 &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force re-add --keep-going 2>&amp;1</string>
+        <string>echo "--- $(date '+%Y-%m-%d %H:%M:%S') ---" &amp;&amp; if ! ssh -o BatchMode=yes -o ConnectTimeout=5 -T git@github.com 2>&amp;1 | grep -q "successfully authenticated"; then echo "1Password agent unavailable (vault likely locked); skipping. Next run will retry."; exit 0; fi &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force update 2>&amp;1 &amp;&amp; /opt/homebrew/bin/chezmoi --no-tty --force re-add --keep-going 2>&amp;1</string>
     </array>
 
     <key>StartInterval</key>
