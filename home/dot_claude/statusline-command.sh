@@ -23,7 +23,7 @@ vim_mode=$(echo "$input" | jq -r '.vim.mode // empty')
 agent_name=$(echo "$input" | jq -r '.agent.name // empty')
 worktree_branch=$(echo "$input" | jq -r '.worktree.branch // empty')
 
-effort=$(echo "$input" | jq -r '.effort_level // empty')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 if [ -z "$effort" ]; then
   effort=$(jq -r '.effortLevel // empty' ~/.claude/settings.json 2>/dev/null)
 fi
@@ -125,6 +125,7 @@ if [ -n "$effort" ]; then
     low)    effort_colour="$GREEN"  ;;
     medium) effort_colour="$YELLOW" ;;
     high)   effort_colour="$RED"    ;;
+    xhigh)  effort_colour="${BOLD}${RED}" ;;
     max)    effort_colour="$MAGENTA" ;;
     *)      effort_colour="$DIM"    ;;
   esac
@@ -134,8 +135,13 @@ fi
 # Context usage (percentage remaining)
 if [ -n "$used_pct" ]; then
   remaining=$(echo "$used_pct" | awk '{printf "%.0f", 100 - $1}')
-  bar=$(context_bar "$used_pct")
-  parts+=("$(printf "ctx:%s${DIM}%s%% left%s" "$bar" "$remaining" "$RESET")")
+  colour="$GREEN"
+  if [ "$(echo "$used_pct >= 80" | bc -l 2>/dev/null)" = "1" ]; then
+    colour="$RED"
+  elif [ "$(echo "$used_pct >= 60" | bc -l 2>/dev/null)" = "1" ]; then
+    colour="$YELLOW"
+  fi
+  parts+=("$(printf "${colour}ctx:%s%% left${RESET}" "$remaining")")
 fi
 
 # Rate limits
