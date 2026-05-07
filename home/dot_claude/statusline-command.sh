@@ -129,7 +129,7 @@ if [ -n "$effort" ]; then
     max)    effort_colour="$MAGENTA" ;;
     *)      effort_colour="$DIM"    ;;
   esac
-  parts+=("$(printf "${effort_colour}effort:%s${RESET}" "$effort")")
+  parts+=("$(printf "effort:${effort_colour}%s${RESET}" "$effort")")
 fi
 
 # Context usage (percentage remaining)
@@ -141,7 +141,7 @@ if [ -n "$used_pct" ]; then
   elif [ "$(echo "$used_pct >= 60" | bc -l 2>/dev/null)" = "1" ]; then
     colour="$YELLOW"
   fi
-  parts+=("$(printf "${colour}ctx:%s%% left${RESET}" "$remaining")")
+  parts+=("$(printf "context:${colour}%s%% left${RESET}" "$remaining")")
 fi
 
 # Rate limits
